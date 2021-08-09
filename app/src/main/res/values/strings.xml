@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">View Model Demo</string>
+    <string name="textViewString">Click the button below to generate a random number</string>
+</resources>
