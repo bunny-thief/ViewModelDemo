@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 
 class MainActivityViewModel: ViewModel() {
 
+
     init {
         Log.i("MainActivityViewModel", "MainActivityViewModel created!")
     }
