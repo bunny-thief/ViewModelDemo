@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bunnythief.viewmodeldemo.databinding.ActivityMainBinding
 
@@ -23,39 +24,31 @@ class MainActivity : AppCompatActivity() {
         //initialize view model
         viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
 
-        //set click listener to random button
+         /*Attach observer to randomInt
+        Changes displayed text property of textView based on the value of randomInt*/
+        viewModel.randomInt.observe(this, Observer { newRandomInt ->
+            if (viewModel.randomInt.value == 0) {
+                binding.textView.text = getString(R.string.textViewString)
+            } else if (viewModel.randomInt.value == -1) {
+                binding.textView.text = getString(R.string.clickButton)
+            } else {
+            binding.textView.text = newRandomInt.toString()
+            }
+        })
+
+        //set click listener to randomButton
         binding.randomButton.setOnClickListener {
             viewModel.setRandomInt()
-            updateRandomInt()
         }
 
+        // Set click listener for resetButton
         binding.resetButton.setOnClickListener {
-            resetIntText()
+            viewModel.resetIntText()
         }
 
         Log.i("MainActivity", "Length of text is: ${binding.textView.text.length}")
         Log.i("MainActivity", "textView.text: ${binding.textView.text}")
         Log.i("MainActivity", "randomInt: ${viewModel.randomInt}")
-
-        //updates value in MainActivity with data from viewModel
-        if (viewModel.randomInt != 0) {
-            updateRandomInt()
-        }
-
-        //changes textView to "Click button" if reset has been called before configuration change
-        if (viewModel.randomInt == -1) {
-            resetIntText()
-        }
     }
 
-    //update textView with current value of randomInt
-    private fun updateRandomInt() {
-        binding.textView.text = viewModel.randomInt.toString()
-    }
-
-    //Clear random integer from textView
-    private fun resetIntText() {
-        viewModel.randomInt = -1
-        binding.textView.text = "Click button"
-    }
 }
