@@ -1,27 +1,30 @@
 package com.bunnythief.viewmodeldemo
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlin.random.Random
 
 class MainActivityViewModel: ViewModel() {
-
-    val randomInt = MutableLiveData<Int>()
+    
+    private val _randomInt = MutableLiveData<Int>()
+    val randomInt: LiveData<Int>
+        get() = _randomInt
 
     // Assign random integer between 1 and 10 to randomInt
     fun setRandomInt() {
-        randomInt.value = Random.nextInt(1, 10)
+        _randomInt.value = Random.nextInt(1, 10)
     }
 
     //Clear random integer from textView
     fun resetIntText() {
-        randomInt.value = -1
+        _randomInt.value = -1
     }
 
     init {
         // Initialize randomint
-        randomInt.value = 0
+        _randomInt.value = 0
         Log.i("MainActivityViewModel", "MainActivityViewModel created!")
     }
 
