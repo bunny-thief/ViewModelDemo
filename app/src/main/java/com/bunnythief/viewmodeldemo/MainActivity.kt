@@ -27,13 +27,10 @@ class MainActivity : AppCompatActivity() {
          /*Attach observer to randomInt
         Changes displayed text property of textView based on the value of randomInt*/
         viewModel.randomInt.observe(this, Observer { newRandomInt ->
-            //TODO: Change if to when statement
-            if (viewModel.randomInt.value == 0) {
-                binding.textView.text = getString(R.string.textViewString)
-            } else if (viewModel.randomInt.value == -1) {
-                binding.textView.text = getString(R.string.clickButton)
-            } else {
-            binding.textView.text = newRandomInt.toString()
+            when (viewModel.randomInt.value) {
+                0 -> binding.textView.text = getString(R.string.textViewString)
+                -1 -> binding.textView.text = getString(R.string.clickButton)
+                else -> binding.textView.text = newRandomInt.toString()
             }
         })
 

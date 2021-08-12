@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import kotlin.random.Random
 
 class MainActivityViewModel: ViewModel() {
-    
+
     private val _randomInt = MutableLiveData<Int>()
     val randomInt: LiveData<Int>
         get() = _randomInt
